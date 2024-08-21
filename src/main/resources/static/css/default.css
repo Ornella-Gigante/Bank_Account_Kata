@@ -1,0 +1,115 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100vh;
+    background-image: url("../static/images/bank2.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 20px;
+  
+    
+}
+
+/* Estilos para el contenedor de la tarjeta */
+#sample-text-card {
+    font-size: 20px;
+    width: 50%;
+    max-width: 600px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 30px 100px 
+   
+}
+
+
+#sample-text-card h1{
+
+  font-size: 65px;
+  margin: 30px 100px 
+
+
+}
+
+/* Estilos para el contenido de la tarjeta */
+.card-body {
+    text-align: left; /* Alinea el contenido del card-body a la izquierda */
+}
+
+/* Estilos para la imagen */
+#slide-image {
+    margin-top: 200px; /* Ajusta el margen superior según sea necesario */
+    margin-left: 20px; /* Alinea la imagen a la izquierda */
+}
+
+#slide-image img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Estilos para los botones */
+
+
+.button-wrapper a {
+    padding: 15px; /* Ajusta el padding para hacer los botones más anchos */
+    width: 200px;
+    color: white;
+    box-shadow: 0px 3px 6px blue;
+ 
+}
+
+.register {
+    margin-right: 7px;
+    background-color: #ff4e00;
+    border:1px solid #543800; 
+   
+    
+}
+
+.login {
+    background-color: #ffb114;
+    border: 1px solid #543800;
+}
+
+
+.card .form-control {
+    margin: 10px 0px;
+    box-shadow: 0px 3px 6px black;
+}
+
+.card button {
+    background-color: #ff4e00;
+    border: 1px solid #543800;
+    color: white;
+    width: 200px;
+    margin: 10px 1px;
+    box-shadow: 0px 3px 6px blue;
+}
+
+.card button:hover {
+    color: white /* Cambia el color del texto a negro al pasar el ratón por encima */
+}
+
+.card{
+
+    font-family: 'Courier New', Courier, monospace;
+   
+}
+
+.card .card-text{
+
+
+    font-size: 16px;
+    
+
+}

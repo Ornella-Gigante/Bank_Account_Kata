@@ -1,0 +1,237 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* Main Body Styling */
+body {
+    background-color: rgb(255, 174, 24);
+    background-image: url("../static/images/bank2.jpg");
+    height: 100vh;
+    background-size: cover;
+    
+}
+
+
+.container{
+
+/* Main Page Header */
+
+margin-top: 30px;
+
+
+}
+
+/* Main Page Header */
+.main-page-header {
+    background-color: rgb(35, 175, 185); /* Color de fondo turquesa */
+    color: white; /* Color del texto */
+    padding: 10px 20px; /* Añade espacio alrededor del contenido */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 1px 3px 6px blue;
+ 
+    
+}
+
+/* Company Name */
+.main-page-header .company-name {
+    font-weight: 300;
+    white-space: nowrap; /* Evitar división automática del texto */
+}
+
+/* Navigation */
+.navigation {
+    margin-left: 20px;
+    white-space: nowrap; /* Evitar división automática del texto */
+}
+
+.navigation li {
+    display: inline-block;
+    list-style-type: none;
+    margin: 0px 15px;
+    white-space: nowrap; /* Evitar división automática del texto */
+}
+
+.navigation li a {
+    color: white; /* Color del texto de los enlaces */
+    text-decoration: none;
+    white-space: nowrap; /* Evitar división automática del texto */
+}
+
+.navigation li a:hover {
+    text-decoration: underline; /* Subrayado al pasar el mouse */
+    white-space: nowrap; /* Evitar división automática del texto */
+}
+
+/* Display Name */
+.display-name {
+    color: white; /* Color del texto */
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    white-space: nowrap; /* Evitar división automática del texto */
+}
+
+.circle {
+    color: white; /* Color del círculo */
+    margin-right: 5px; /* Espacio entre el círculo y el texto */
+}
+
+/* Evitar que el texto dentro del span se divida en varias líneas */
+.display-name span {
+    white-space: nowrap; /* Evitar división automática del texto */
+    margin-right: 20px;
+}
+
+
+
+.btn {
+
+
+  margin-right: 20px;
+
+}
+
+
+/** Transact BUtton**/
+
+/* Estilo para el botón de transacción */
+.transact-btn {
+    background-color: #ffb114;
+    border: 1px solid #543800; 
+    color: white;
+    margin-top: 50px;
+    padding: 15px 30px;
+    border-radius: 5px; /* Bordes redondeados (opcional) */
+    width: 200px;
+    color: white;
+    box-shadow: 0px 3px 6px blue;
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave para el hover */
+}
+
+.transact-btn:hover {
+    background-color: transparent; /* Hacer el fondo transparente al pasar el ratón */
+    color: #ffb114; /* Cambiar el color del texto para mantener la visibilidad */
+}
+
+/* Estilo para el botón de cuenta */
+.account-btn {
+    background-color: #ff4e00;
+    border: 1px solid #543800; 
+    color: white;
+    margin-top: 50px;
+    padding: 15px 30px;
+    border-radius: 5px; /* Bordes redondeados (opcional) */
+    width: 200px;
+    color: white;
+    box-shadow: 0px 3px 6px blue;
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave para el hover */
+}
+
+.account-btn:hover {
+    background-color: transparent; /* Hacer el fondo transparente al pasar el ratón */
+    color: #ff4e00; /* Cambiar el color del texto para mantener la visibilidad */
+}
+
+/**OffCanvas Background**/ 
+
+.offcanvas{
+
+
+    background-image: url("../static/images/offcanvas2.jpg");
+    height: 100vh;
+    background-size: cover;
+}
+
+
+.pay-btn{
+
+
+    background-color: #ffb114;
+    border: 1px solid #543800; 
+    color: white;
+    margin-top: 10px;
+    padding: 15px 30px;
+    border-radius: 5px; /* Bordes redondeados (opcional) */
+    width: 92px;
+    color: white;
+    box-shadow: 0px 3px 6px blue;
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave para el hover */
+
+}
+
+
+.pay-btn:hover {
+    background-color: transparent; /* Hacer el fondo transparente al pasar el ratón */
+    color: #ff4e00; /* Cambiar el color del texto para mantener la visibilidad */
+}
+
+/**    <!--Card: Payment Card-->**/
+
+.payment-card{
+
+    display: none;
+
+
+}
+
+
+/**    <!--Card: Transfer Card-->**/
+
+.transfer-card{
+
+    display: none;
+
+
+}
+
+/**    <!--Card: Deposit Card-->**/
+
+.deposit-card{
+
+    display: none;
+
+
+}
+
+/**    <!--Card: Whitdraw Card-->**/
+
+.withdraw-card{
+
+    display: none;
+
+
+}
+
+/* Transfer button*/
+.btn-md{
+
+    padding: 15px 15px; 
+    font-size: 15px; 
+    width: 100%; 
+    max-width: 120px; 
+    margin-left: 5px;
+
+}
+
+
+
+.btn-pay{
+
+    padding: 15px 15px; 
+    font-size: 15px; 
+    width: 100%; 
+    max-width: 120px; 
+    margin-left: 10px;
+    
+   
+
+}
+
+
+
