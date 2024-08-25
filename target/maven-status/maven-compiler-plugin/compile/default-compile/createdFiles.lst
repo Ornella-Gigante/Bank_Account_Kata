@@ -9,10 +9,14 @@ com/demo_bank_v1/helpers/Token.class
 com/demo_bank_v1/models/User.class
 com/demo_bank_v1/controllers/AccountController.class
 com/demo_bank_v1/config/AppConfig.class
+com/demo_bank_v1/models/TransactionHistory.class
 com/demo_bank_v1/repository/PaymentRepository.class
 com/demo_bank_v1/helpers/GenAccountNumber.class
 com/demo_bank_v1/models/Payment.class
 com/demo_bank_v1/controllers/TransactController.class
+com/demo_bank_v1/repository/TransactRepository.class
+com/demo_bank_v1/models/PaymentHistory.class
+com/demo_bank_v1/models/Transact.class
 com/demo_bank_v1/controllers/RegisterController.class
 com/demo_bank_v1/controler_advisor/AdvisorController.class
 com/demo_bank_v1/DemoBankV1Application.class

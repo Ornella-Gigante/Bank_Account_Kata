@@ -4,6 +4,7 @@ import com.demo_bank_v1.models.Payment;
 import com.demo_bank_v1.models.User;
 import com.demo_bank_v1.repository.AccountRepository;
 import com.demo_bank_v1.repository.PaymentRepository;
+import com.demo_bank_v1.repository.TransactRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,11 +19,16 @@ import java.time.LocalDateTime;
 @RequestMapping("/transact")
 public class TransactController {
 
+    LocalDateTime currentDateTime = LocalDateTime.now();
+
     @Autowired
     private AccountRepository accountRepository;
 
     @Autowired
     private PaymentRepository paymentRepository;
+
+    @Autowired
+    private TransactRepository transactRepository;
 
     User user;
 
@@ -74,6 +80,9 @@ public class TransactController {
 
         // Update Account:
         accountRepository.changeAccountBalanceById(newBalance, acc_id);
+
+        // Log Successful Transaction
+        transactRepository.logTransaction(acc_id, "deposit", depositAmountValue, "online", "success", "Deposit Transaction Successful", currentDateTime);
         redirectAttributes.addFlashAttribute("success", "Amount Deposited Successfully");
 
         return "redirect:/app/dashboard";
@@ -117,13 +126,15 @@ public class TransactController {
             return "redirect:/app/dashboard";
         }
 
-        //TODO: CHECK FOR 0(ZERO) VALUES:
+
+        //TODO: CHECK FOR 0 VALUES:
 
         if(transferAmount == 0){
 
-            redirectAttributes.addFlashAttribute("error", "Please Add an Amount for the Transfer");
+            redirectAttributes.addFlashAttribute("error", "Transfer amount must be more than 0!");
 
             return "redirect:/app/dashboard";
+
         }
 
 
@@ -135,12 +146,22 @@ public class TransactController {
         // TODO: GET CURRENT BALANCE:
 
         double currentBalanceOfTransferringFrom= accountRepository.getAccountBalance(user.getUser_id(), transferFromId);
+
         double currentBalanceOfTransferringTo= accountRepository.getAccountBalance(user.getUser_id(), transferToId);
 
         //TODO: SET NEW BALANCE:
 
 
         double newBalanceOfAccountTransferringFrom= currentBalanceOfTransferringFrom - transferAmount;
+
+        // TODO: CHECK IF PAYMENT AMOUNT IS MORE THAN CURRENT BALANCE:
+        if(newBalanceOfAccountTransferringFrom < transferAmount){
+            //Log Failed Transaction :(
+            transactRepository.logTransaction(transferFromId, "transfer", transferAmount, "online", "failed", "Insufficient Funds", currentDateTime);
+            redirectAttributes.addFlashAttribute("error", "Oops! Insufficient Funds to perfom this transfer");
+            return "redirect:/app/dashboard";
+        }
+
 
         double newBalanceOfAccountTransferringTo= currentBalanceOfTransferringTo + transferAmount;
 
@@ -153,6 +174,8 @@ public class TransactController {
 
         //Success Message for the transference
 
+        // Log Succesful Trasaction:
+        transactRepository.logTransaction(transferFromId, "transfer", transferAmount, "online", "success", "Transfer Transaction Successful", currentDateTime);
         redirectAttributes.addFlashAttribute("success", "Amount Transferred Successfully!");
         return "redirect:/app/dashboard";
 
@@ -191,6 +214,7 @@ public class TransactController {
 
         }
 
+
         //TODO: GET LOGGED IN USER:
 
         user = (User) session.getAttribute("user");
@@ -200,6 +224,15 @@ public class TransactController {
 
         currentBalance= accountRepository.getAccountBalance(user.getUser_id(),account_id);
 
+
+        // TODO: CHECK IF TRANSFER AMOUNT IS MORE THAN CURRENT BALANCE:
+        if(currentBalance < withdrawal_amount){
+            //Log Failed Transaction :(
+            transactRepository.logTransaction(account_id, "withdrawal", withdrawal_amount, "online", "failed", "Insufficient Funds", currentDateTime);
+            redirectAttributes.addFlashAttribute("error", "Oops! Insufficient Funds to perfom this transfer");
+            return "redirect:/app/dashboard";
+        }
+
         //TODO: SET NEW BALANCE:
 
         newBalance = currentBalance - withdrawal_amount;
@@ -208,6 +241,8 @@ public class TransactController {
 
         accountRepository.changeAccountBalanceById(newBalance,account_id);
 
+        // Log Successful Withdrawal:
+        transactRepository.logTransaction(account_id, "withdrawal", withdrawal_amount, "online", "success", "Withdrawal Transaction Successful", currentDateTime);
         redirectAttributes.addFlashAttribute("success", "Withdraw made successfully! :) ");
 
         return "redirect:/app/dashboard";
@@ -259,6 +294,8 @@ public class TransactController {
         // TODO: CHECK IF PAYMENT AMOUNT IS MORE THAN CURRENT BALANCE:
         if(currentBalance < paymentAmount){
 
+            //Log Failed Transaction :(
+            transactRepository.logTransaction(accountID, "payment", paymentAmount, "online", "failed", "Insufficient Funds", currentDateTime);
             redirectAttributes.addFlashAttribute("error", "Oops! Insufficient Funds to perfom this payment");
             return "redirect:/app/dashboard";
         }
@@ -268,16 +305,15 @@ public class TransactController {
 
 
         // TODO: MAKE PAYMENT:
-        LocalDateTime currentDateTime = LocalDateTime.now();
+
         paymentRepository.makePayment(accountID, beneficiary,account_number, paymentAmount, reference, "success", "Payment Successful!",currentDateTime);
 
 
         // TODO: UPDATE ACCOUNT PAYING FROM:
         accountRepository.changeAccountBalanceById(newBalance, accountID);
 
-
-
-
+        //Log Successful Transaction
+        transactRepository.logTransaction(accountID, "payment", paymentAmount, "online", "success", "Payment Transaction Successful", currentDateTime);
         redirectAttributes.addFlashAttribute("success", "Payment Successful!");
         return "redirect:/app/dashboard";
 
