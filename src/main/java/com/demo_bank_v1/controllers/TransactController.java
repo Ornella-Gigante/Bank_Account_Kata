@@ -1,7 +1,9 @@
 package com.demo_bank_v1.controllers;
 
+import com.demo_bank_v1.models.Payment;
 import com.demo_bank_v1.models.User;
 import com.demo_bank_v1.repository.AccountRepository;
+import com.demo_bank_v1.repository.PaymentRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,12 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
+
 @Controller
 @RequestMapping("/transact")
 public class TransactController {
 
     @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
+    private PaymentRepository paymentRepository;
 
     User user;
 
@@ -205,7 +212,74 @@ public class TransactController {
 
         return "redirect:/app/dashboard";
 
+    }
 
+
+    // End of withdrawal Method yaay
+
+    @PostMapping("/payment")
+    public String payment(@RequestParam("beneficiary")String beneficiary,
+                          @RequestParam("account_number")String account_number,
+                          @RequestParam("account_id")String account_id,
+                          @RequestParam("reference")String reference,
+                          @RequestParam("payment_amount")String payment_amount,
+                          HttpSession session,
+                          RedirectAttributes redirectAttributes
+    ){
+
+        // TODO: CHECK FOR EMPTY VALUES:
+        if(beneficiary.isEmpty()|| account_number.isEmpty()|| account_id.isEmpty()|| payment_amount.isEmpty()){
+
+            redirectAttributes.addFlashAttribute("error", "There cannot be empty values!");
+            return "redirect:/app/dashboard";
+
+        }
+
+        // TODO: CONVERT VARIABLES:
+        int accountID = Integer.parseInt(account_id);
+        double paymentAmount = Double.parseDouble(payment_amount);
+
+
+        // TODO: CHECK FOR O (ZERO) VALUES:
+        if(paymentAmount == 0){
+
+            redirectAttributes.addFlashAttribute("error", "Values must be greater than 0 (Zero)!");
+            return "redirect:/app/dashboard";
+        }
+
+
+        // TODO: GET LOGGED IN USER:
+        user= (User) session.getAttribute("user");
+
+
+        // TODO: GET CURRENT BALANCE:
+        currentBalance = accountRepository.getAccountBalance(user.getUser_id(),accountID);
+
+
+        // TODO: CHECK IF PAYMENT AMOUNT IS MORE THAN CURRENT BALANCE:
+        if(currentBalance < paymentAmount){
+
+            redirectAttributes.addFlashAttribute("error", "Oops! Insufficient Funds to perfom this payment");
+            return "redirect:/app/dashboard";
+        }
+
+        // TODO: SET NEW BALANCE FOR ACCOUNT PAYING FROM:
+        newBalance = currentBalance - paymentAmount;
+
+
+        // TODO: MAKE PAYMENT:
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        paymentRepository.makePayment(accountID, beneficiary,account_number, paymentAmount, reference, "success", "Payment Successful!",currentDateTime);
+
+
+        // TODO: UPDATE ACCOUNT PAYING FROM:
+        accountRepository.changeAccountBalanceById(newBalance, accountID);
+
+
+
+
+        redirectAttributes.addFlashAttribute("success", "Payment Successful!");
+        return "redirect:/app/dashboard";
 
 
     }

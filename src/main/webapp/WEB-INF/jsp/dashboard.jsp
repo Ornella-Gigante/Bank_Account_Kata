@@ -221,16 +221,23 @@
              </select>
 
             <!-- Payments Form Card -->
+
             <div class="card payment-card" style="display: none;">
                 <div class="card-body">
+
+                <!--Payment Form-->
+
+                <form action= "/transact/payment" method="POST">
+
                     <div class="form-group mb-2">
                         <label for="beneficiary">Beneficiary</label>
-                        <input type="text" name="beneficiary" id="beneficiary" class="form-control" placeholder="Account Beneficiary name">
+                        <input type="text" name="beneficiary"  class="form-control" placeholder="Account Beneficiary name">
                     </div>
                     <div class="form-group mb-2">
                         <label for="account_number">Beneficiary Account Number</label>
                         <input type="text" name="account_number" id="account_number" class="form-control" placeholder="Enter Beneficiary Account No">
                     </div>
+
                     <div class="form-group">
                         <label for="select_account">Select Account</label>
                         <select name="account_id" id="select_account" class="form-control">
@@ -240,6 +247,7 @@
                             </c:forEach>
                         </select>
                     </div>
+
                     <div class="form-group mb-2">
                         <label for="reference">Reference</label>
                         <input type="text" name="reference" id="reference" class="form-control" placeholder="Enter Reference">
@@ -251,8 +259,17 @@
                     <div class="form-group mb-2">
                         <button class="pay-btn btn-md">Pay</button>
                     </div>
+
+                 </form>
+
+                 <--End of Payment Form-->
+
                 </div>
+
+                <!--End of Payment Form-->
             </div>
+
+            <!--End of Payment Form card-->
 
           <!-- Transfer Form Card -->
           <div class="card transfer-card" style="display: none;">
