@@ -186,8 +186,8 @@
 
              <nav class="navigation">
                  <ul class="list-unstyled mb-0">
-                     <li><a href="#">Dashboard</a></li>
-                     <li><a href="#">Payment History</a></li>
+                     <li><a href="/app/dashboard">Dashboard</a></li>
+                     <li><a href="/app/payment_history">Payment History</a></li>
                      <li><a href="#">Transaction History</a></li>
                  </ul>
              </nav>

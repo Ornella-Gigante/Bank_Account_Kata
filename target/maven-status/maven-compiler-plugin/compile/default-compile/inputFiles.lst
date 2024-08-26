@@ -19,6 +19,7 @@
 /home/nella/Bank_Account_Kata/src/main/java/com/demo_bank_v1/models/TransactionHistory.java
 /home/nella/Bank_Account_Kata/src/main/java/com/demo_bank_v1/models/User.java
 /home/nella/Bank_Account_Kata/src/main/java/com/demo_bank_v1/repository/AccountRepository.java
+/home/nella/Bank_Account_Kata/src/main/java/com/demo_bank_v1/repository/PaymentHistoryRepository.java
 /home/nella/Bank_Account_Kata/src/main/java/com/demo_bank_v1/repository/PaymentRepository.java
 /home/nella/Bank_Account_Kata/src/main/java/com/demo_bank_v1/repository/TransactRepository.java
 /home/nella/Bank_Account_Kata/src/main/java/com/demo_bank_v1/repository/UserRepository.java
