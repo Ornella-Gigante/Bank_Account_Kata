@@ -15,6 +15,7 @@ com/demo_bank_v1/repository/PaymentHistoryRepository.class
 com/demo_bank_v1/helpers/GenAccountNumber.class
 com/demo_bank_v1/models/Payment.class
 com/demo_bank_v1/controllers/TransactController.class
+com/demo_bank_v1/repository/TransactHistoryRepository.class
 com/demo_bank_v1/repository/TransactRepository.class
 com/demo_bank_v1/models/PaymentHistory.class
 com/demo_bank_v1/models/Transact.class

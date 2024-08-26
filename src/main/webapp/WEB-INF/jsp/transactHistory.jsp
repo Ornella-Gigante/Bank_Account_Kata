@@ -177,97 +177,45 @@
     </style>
 </head>
 <body>
-  <!-- Header -->
-     <header class="main-page-header mb-3">
-         <div class="container d-flex align-items-center">
-             <div class="company-name">
-                 <h2>Bank Account Demo</h2>
-             </div>
+   <!-- Header -->
+   </header>
 
-             <nav class="navigation">
-                 <ul class="list-unstyled mb-0">
-                     <li><a href="#">Dashboard</a></li>
-                     <li><a href="#">Payment History</a></li>
-                     <li><a href="#">Transaction History</a></li>
-                 </ul>
-             </nav>
-
-             <div class="display-name ml-auto text-white">
-                 <i class="fas fa-circle circle"></i> Welcome: <span>${user.first_name} ${user.last_name}</span>
-             </div>
-
-             <a href="/logout" class="btn btn-sm text-white">
-                 <i class="fas fa-sign-out me-2"></i>Sign out
-             </a>
-         </div>
-     </header>
-
-     <!--Container-->
-
-     <div>
-
-          <!-- Card:Payment History Card -->
-
-          <div class="card">
-
-                  <!--Card Body-->
-
-                  <div class="card-body">
-                  <c:if test= "${requestScope.payment_history !=null}">
-
-                            <!--Payment History Table-->
-
-                            <table class="table text-center table-striped" style="background-color: #f0f8ff;">
-
-
-                                 <tr>
-
-                                     <th>Record Number</th>
-                                     <th>Beneficiary</th>
-                                     <th>Beneficiary Account NUmber</th>
-                                     <th>Amount</th>
-                                     <th>Status</th>
-                                     <th>Reference</th>
-                                     <th>Reason Code</th>
-                                     <th>Created at</th>
-
-                                 </tr>
-
-                            <!--Loop Through Payment History Records-->
-                            <c:forEach items= "${requestScope.payment_history}" var= "payments">
-
-                                 <tr>
-
-                                    <th>${payments.payment_id}</th>
-                                    <th>${payments.beneficiary}</th>
-                                    <th>${payments.beneficiary_acc_no}</th>
-                                    <th>${payments.amount}</th>
-                                    <th>${payments.status}</th>
-                                    <th>${payments.reference_no}</th>
-                                    <th>${payments.reason_code}</th>
-                                    <th>${payments.created_at}</th>
-
-                                 </tr>
-                            </c:forEach>
-                            <!--End Of Loop Through Payment History Records-->
-
-                            </table>
-                            <!--End of Payment History Table-->
-                         </c:if>
-
-                  </div>
-
-                  <!--End of Card Body-->
-          <div>
-
-
-          <!--End of Card:Payment History Card-->
-
-     </div>
-
-     <!--End of Container-->
-
-
-</body>
-
-</html>
+       <div class="container">
+           <div class="card">
+               <div class="card-body">
+                   <c:if test="${not empty transact_history}">
+                       <table class="table text-center table-striped" style="background-color: #f0f8ff;">
+                           <thead>
+                               <tr>
+                                   <th>Transaction ID</th>
+                                   <th>Transaction Type</th>
+                                   <th>Amount</th>
+                                   <th>Source</th>
+                                   <th>Status</th>
+                                   <th>Reason Code</th>
+                                   <th>Created at</th>
+                               </tr>
+                           </thead>
+                           <tbody>
+                               <c:forEach var="transactHistory" items="${transact_history}">
+                                   <tr>
+                                       <td>${transactHistory.transaction_id}</td>
+                                       <td>${transactHistory.transaction_type}</td>
+                                       <td>${transactHistory.amount}</td>
+                                       <td>${transactHistory.source}</td>
+                                       <td>${transactHistory.status}</td>
+                                       <td>${transactHistory.reason_code}</td>
+                                       <td>${transactHistory.created_at}</td>
+                                   </tr>
+                               </c:forEach>
+                           </tbody>
+                       </table>
+                   </c:if>
+                   <c:if test="${empty transact_history}">
+                       <p>No transactions found.</p>
+                   </c:if>
+               </div>
+           </div>
+       </div>
+   </body>
+   </html>

@@ -1,11 +1,9 @@
 package com.demo_bank_v1.controllers;
 
-import com.demo_bank_v1.models.Account;
-import com.demo_bank_v1.models.Payment;
-import com.demo_bank_v1.models.PaymentHistory;
-import com.demo_bank_v1.models.User;
+import com.demo_bank_v1.models.*;
 import com.demo_bank_v1.repository.AccountRepository;
 import com.demo_bank_v1.repository.PaymentHistoryRepository;
+import com.demo_bank_v1.repository.TransactHistoryRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +24,9 @@ public class AppController {
 
     @Autowired
     private PaymentHistoryRepository paymentHistoryRepository;
+
+    @Autowired
+    private TransactHistoryRepository transactHistoryRepository;
 
     @GetMapping("/dashboard")
     public ModelAndView getDashboard(HttpSession session) {
@@ -67,6 +68,25 @@ public class AppController {
         getPaymentHistoryPage.addObject("payment_history", userPaymentHistory);
 
         return getPaymentHistoryPage;
+
+    }
+
+
+    @GetMapping("/transact_history")
+    public ModelAndView getTransactHistory(HttpSession session){
+        //Set View:
+        ModelAndView getTransactHistory= new ModelAndView("transactHistory");
+
+        //Get Logged In User:
+
+        user=(User) session.getAttribute("user");
+
+        //Get Payment History/ Records:
+
+        List<TransactionHistory> userTransactHistory= transactHistoryRepository.getTransactionRecordsById(user.getUser_id());
+        getTransactHistory.addObject("transact_history", userTransactHistory);
+
+        return getTransactHistory;
 
     }
 
