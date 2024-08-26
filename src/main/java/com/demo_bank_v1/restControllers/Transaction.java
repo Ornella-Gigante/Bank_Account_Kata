@@ -1,6 +1,7 @@
 package com.demo_bank_v1.restControllers;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,11 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Transaction {
 
-    @PostMapping("/transactions")
+    @PostMapping("/accounts/{accountID}/transactions")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createTransaction(){
+    public void createTransaction(@PathVariable(name="accountID")String account_id){
 
-        System.out.println("Transaction invoked");
+        System.out.println(account_id);
 
     }
 }

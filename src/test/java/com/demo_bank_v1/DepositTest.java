@@ -48,7 +48,7 @@ class DepositTest{
                 .port(this.port)
                 .body(requestBody)
         .when()
-                .post("/transactions")
+                .post("/accounts/1234/transactions")
 
         .then()
                 .statusCode(201);
