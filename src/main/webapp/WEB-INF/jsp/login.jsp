@@ -129,22 +129,19 @@
             </c:if>
             <!-- End of Display Message -->
 
-
             <c:if test="${not empty requestScope.error}">
                  <div class="alert alert-danger text-center border border-danger">
                        <b>${requestScope.error}</b>
                  </div>
             </c:if>
 
-
-             <!-- Logout Form -->
+            <!-- Logout Form -->
              <c:if test="${not empty logged_out}">
                  <div class="alert alert-info text-center border border-info">
                      <b>${logged_out}</b>
                  </div>
              </c:if>
              <!-- End Logout Form -->
-
 
             <!-- Login Form -->
             <form action="/login" method="POST" class="login-form">
@@ -160,13 +157,10 @@
                 </div>
                 <!-- End of Form Group -->
 
-                  <!-- Form Group for Password -->
-                  <div class="form-group col">
-                     <input type="hidden" name="_token" value="${token}"/>
-                  </div>
-                  <!-- End of Form Group -->
+                <!-- Hidden field for Token -->
+                <input type="hidden" name="token" value="${token}" />
 
-                <!-- Form Group for Email -->
+                <!-- Form Group for Login Button -->
                 <div class="form-group col">
                     <button class="btn btn-lg">Login</button>
                 </div>

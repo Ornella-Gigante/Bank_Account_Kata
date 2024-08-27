@@ -24,9 +24,9 @@ public class AuthController {
     @GetMapping("/login")
     public String getLogin(Model model) {
         System.out.println("In Login Page Controller");
-        // Sending the Token String:
+        // Generar un token de seguridad único
         String token = Token.generateToken();
-        // Sending the token to View:
+        // Enviar el token a la vista para que se incluya en el formulario de login
         model.addAttribute("token", token);
         model.addAttribute("PageTitle", "Login");
         return "login";
@@ -35,59 +35,59 @@ public class AuthController {
     @PostMapping("/login")
     public String login(@RequestParam("email") String email,
                         @RequestParam("password") String password,
-                        @RequestParam("_token") String token,
+                        @RequestParam("token") String token,  // Token esperado en la solicitud
                         Model model,
                         HttpSession session) {
 
         System.out.println("Attempting to login with email: " + email);
 
         try {
-            // Validate input fields / form data
+            // Validar campos de entrada
             if (email.isEmpty() || password.isEmpty()) {
                 model.addAttribute("error", "Email or Password cannot be empty");
                 return "login";
             }
 
-            // Check if email exists in the database
+            // Verificar si el email existe en la base de datos
             Optional<String> emailInDatabase = userRepository.getUserEmail(email);
             if (emailInDatabase.isEmpty()) {
                 model.addAttribute("error", "Email not found");
                 return "login";
             }
 
-            // Get password from the database
+            // Obtener la contraseña de la base de datos
             Optional<String> passwordInDatabase = userRepository.getUserPassword(emailInDatabase.get());
             if (passwordInDatabase.isEmpty()) {
                 model.addAttribute("error", "Internal Error: Password not found");
                 return "error";
             }
 
-            // Validate password
+            // Validar contraseña
             if (!BCrypt.checkpw(password, passwordInDatabase.get())) {
                 model.addAttribute("error", "Incorrect Email or Password");
                 return "login";
             }
 
-            // Check if user account is verified
+            // Verificar si la cuenta del usuario está verificada
             Optional<Integer> verified = userRepository.isVerified(emailInDatabase.get());
             if (verified.isEmpty() || verified.get() != 1) {
                 model.addAttribute("error", "This account is not verified. Please check your email to verify your account.");
                 return "login";
             }
 
-            // Proceed to log the user in
+            // Obtener los detalles del usuario
             Optional<User> user = userRepository.getUserDetails(emailInDatabase.get());
             if (user.isEmpty()) {
                 model.addAttribute("error", "Internal Error: User details not found");
                 return "error";
             }
 
-            // Set Session Attributes
+            // Configurar los atributos de sesión
             session.setAttribute("user", user.get());
-            session.setAttribute("token", token);
+            session.setAttribute("token", token);  // Guardar el token en la sesión
             session.setAttribute("authenticated", true);
 
-            return "redirect:/app/dashboard"; // Redirect to the dashboard
+            return "redirect:/app/dashboard";  // Redirigir al dashboard
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,12 +98,8 @@ public class AuthController {
 
     @GetMapping("/logout")
     public String logout(HttpSession session, RedirectAttributes redirectAttributes) {
-        session.invalidate();
+        session.invalidate();  // Invalidar la sesión
         redirectAttributes.addFlashAttribute("logged_out", "Logged out successfully!");
-        return "redirect:/login";
+        return "redirect:/login";  // Redirigir a la página de login
     }
-
-
-
-
 }
