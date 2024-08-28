@@ -8,6 +8,7 @@ com/demo_bank_v1/controllers/IndexController.class
 com/demo_bank_v1/helpers/Token.class
 com/demo_bank_v1/models/User.class
 com/demo_bank_v1/controllers/AccountController.class
+com/demo_bank_v1/config/webConfig.class
 com/demo_bank_v1/config/AppConfig.class
 com/demo_bank_v1/models/TransactionHistory.class
 com/demo_bank_v1/interceptors/AppInterceptor.class

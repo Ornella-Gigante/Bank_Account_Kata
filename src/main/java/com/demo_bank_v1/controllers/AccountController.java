@@ -24,27 +24,27 @@ public class AccountController {
                                 RedirectAttributes redirectAttributes,
                                 HttpSession session) {
 
-        // Verifica si el nombre de la cuenta y el tipo están vacíos
+        // Check for empty strings
         if (accountName == null || accountName.trim().isEmpty() || accountType == null || accountType.trim().isEmpty()) {
             redirectAttributes.addFlashAttribute("error", "Account Name and Type Cannot Be Empty!");
             return "redirect:/app/dashboard";
         }
 
-        // Obtén el usuario logueado de la sesión
+        // Get logged in user
         User user = (User) session.getAttribute("user");
         if (user == null) {
             redirectAttributes.addFlashAttribute("error", "User not logged in!");
             return "redirect:/app/dashboard";
         }
 
-        // Genera el número de cuenta
+        // Generate the account number
         int setAccountNumber = GenAccountNumber.generateAccountNumber();
         String bankAccountNumber = Integer.toString(setAccountNumber);
 
-        // Crea la cuenta en la base de datos
+        // Create account
         accountRepository.createBankAccount(user.getUser_id(), bankAccountNumber, accountName, accountType);
 
-        // Agrega el mensaje de éxito
+        // Set success message
         redirectAttributes.addFlashAttribute("success", "Account Created Successfully!");
         return "redirect:/app/dashboard";
     }

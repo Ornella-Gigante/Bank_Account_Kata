@@ -32,6 +32,11 @@
             margin-top: 30px;
         }
 
+        .hidden-elements {
+            display: none;
+        }
+
+
         .main-page-header {
             background-color: rgb(35, 175, 185);
             color: white;
@@ -375,67 +380,84 @@
 
                 <!--END AMOUNT-->
 
-    <!-- Add Accounts Offcanvas: pulls from the right -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-        <div class="offcanvas-header">
-            <h5 id="offcanvasRightLabel" class="offcanvas-title text-white" style="color: white; font-weight: bold">Create an Account</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <!-- Card: Accounts Form Card -->
-            <div class="card">
-                <div class="card-body">
-                    <!-- Card Body -->
-                    <form action="/account/create_account" method="POST" class="add-account-form">
-                        <!-- Form Group -->
-                        <div class="form-group mb-3">
-                            <label for="account_name">Enter the account name</label>
-                            <input type="text" name="account_name" id="account_name" class="form-control" placeholder="Enter Account Name...">
-                        </div>
-                        <!-- End of Form Group -->
-
-                        <!-- Form Group -->
-                        <div class="form-group mb-3">
-                            <label for="account_type">Select Account Type</label>
-                            <select name="account_type" id="account_type" class="form-control">
-                                <option value="">-- Select Account Type --</option>
-                                <option value="check">Check</option>
-                                <option value="savings">Savings</option>
-                                <option value="business">Business</option>
-                            </select>
-                        </div>
-                        <!-- End of Form Group -->
-
-                        <!-- Button -->
-                        <div class="form-group mb-2">
-                            <button type="submit" class="pay-btn btn-pay">Add</button>
-                        </div>
-                        <!-- End of Button -->
-                    </form>
-                </div>
-                <!-- End of card Body -->
-            </div>
-            <!-- End of Card: Accounts Form Card -->
-        </div>
-    </div>
-    <!-- End Of Right Side of Canvas -->
 
 
-    <!-- Container -->
-    <div class="container">
-        <!-- Success Form -->
-        <c:if test="${success != null}">
-            <div class="alert alert-info text-center border border-info">
-                <b>${success}</b>
-            </div>
-        </c:if>
-        <!-- Success Logout Form -->
-        <c:if test="${error != null}">
-            <div class="alert alert-danger text-center border border-danger">
-                <b>${error}</b>
-            </div>
-        </c:if>
-    </div>
+  <!-- Add Accounts Offcanvas: pulls from the right -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+      <div class="offcanvas-header">
+          <h5 id="offcanvasRightLabel" class="offcanvas-title text-white" style="color: white; font-weight: bold">Create an Account</h5>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+          <!-- Card: Accounts Form Card -->
+          <div class="card">
+              <div class="card-body">
+                  <!-- Card Body -->
+
+                  <!-- This form contains the elements to be hidden -->
+                  <form action="/account/create_account" method="post">
+                      <!-- Hidden Elements -->
+                      <div hidden>
+                          <label for="account_name">Account Name:</label>
+                          <input type="text" id="account_name" name="account_name" />
+
+                          <label for="account_type">Account Type:</label>
+                          <input type="text" id="account_type" name="account_type" />
+                      </div>
+
+                  </form>
+
+                  <!-- This form is visible -->
+                  <form action="/account/create_account" method="POST" class="add-account-form">
+                      <!-- Form Group -->
+                      <div class="form-group mb-3">
+                          <label for="account_name">Enter the account name</label>
+                          <input type="text" name="account_name" id="account_name" class="form-control" placeholder="Enter Account Name...">
+                      </div>
+                      <!-- End of Form Group -->
+
+                      <!-- Form Group -->
+                      <div class="form-group mb-3">
+                          <label for="account_type">Select Account Type</label>
+                          <select name="account_type" class="form-control">
+                              <option value="">-- Select Account Type --</option>
+                              <option value="check">Check</option>
+                              <option value="savings">Savings</option>
+                              <option value="business">Business</option>
+                          </select>
+                      </div>
+                      <!-- End of Form Group -->
+                      <!-- Button -->
+                      <div class="form-group mb-2">
+                          <button type="submit" class="pay-btn btn-pay">Add</button>
+                      </div>
+                      <!-- End of Button -->
+                  </form>
+              </div>
+              <!-- End of card Body -->
+          </div>
+          <!-- End of Card: Accounts Form Card -->
+      </div>
+  </div>
+  <!-- End Of Right Side of Canvas -->
+
+   <!-- Container -->
+      <div class="container">
+          <!-- Success Form -->
+          <c:if test="${success != null}">
+              <div class="alert alert-info text-center border border-info">
+                  <b>${success}</b>
+              </div>
+          </c:if>
+          <!-- Success Logout Form -->
+          <c:if test="${error != null}">
+              <div class="alert alert-danger text-center border border-danger">
+                  <b>${error}</b>
+              </div>
+          </c:if>
+      </div>
+    <!-- End of container -->
+
     <!-- End of container -->
 
      <!-- Include Bootstrap JS and jQuery -->
