@@ -12,6 +12,7 @@ com/demo_bank_v1/config/AppConfig.class
 com/demo_bank_v1/models/TransactionHistory.class
 com/demo_bank_v1/interceptors/AppInterceptor.class
 com/demo_bank_v1/repository/PaymentRepository.class
+com/demo_bank_v1/restControllers/Transaction.class
 com/demo_bank_v1/repository/PaymentHistoryRepository.class
 com/demo_bank_v1/helpers/GenAccountNumber.class
 com/demo_bank_v1/models/Payment.class

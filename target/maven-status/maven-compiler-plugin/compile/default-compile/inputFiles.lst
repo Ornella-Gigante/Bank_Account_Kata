@@ -1,6 +1,7 @@
 /home/nella/Bank_Account_Kata/src/main/java/com/demo_bank_v1/DemoBankV1Application.java
 /home/nella/Bank_Account_Kata/src/main/java/com/demo_bank_v1/config/AppConfig.java
 /home/nella/Bank_Account_Kata/src/main/java/com/demo_bank_v1/config/MailConfig.java
+/home/nella/Bank_Account_Kata/src/main/java/com/demo_bank_v1/config/webConfig.java
 /home/nella/Bank_Account_Kata/src/main/java/com/demo_bank_v1/controler_advisor/AdvisorController.java
 /home/nella/Bank_Account_Kata/src/main/java/com/demo_bank_v1/controllers/AccountController.java
 /home/nella/Bank_Account_Kata/src/main/java/com/demo_bank_v1/controllers/AppController.java

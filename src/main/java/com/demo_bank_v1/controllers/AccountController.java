@@ -17,45 +17,35 @@ public class AccountController {
 
     @Autowired
     private AccountRepository accountRepository;
+
     @PostMapping("/create_account")
-    public String createAccount(@RequestParam("account_name")String accountName,
-                                @RequestParam("account_type")String accountType,
+    public String createAccount(@RequestParam("account_name") String accountName,
+                                @RequestParam("account_type") String accountType,
                                 RedirectAttributes redirectAttributes,
-                                HttpSession session){
+                                HttpSession session) {
 
-        //Listita siuuu
-        // TODO: CHECK FOR EMPTY STRINGS:
-
-        if(accountName.isEmpty() || accountType.isEmpty()){
+        // Verifica si el nombre de la cuenta y el tipo están vacíos
+        if (accountName == null || accountName.trim().isEmpty() || accountType == null || accountType.trim().isEmpty()) {
             redirectAttributes.addFlashAttribute("error", "Account Name and Type Cannot Be Empty!");
             return "redirect:/app/dashboard";
-
         }
 
-        // TODO: GET LOGGED IN USER:
+        // Obtén el usuario logueado de la sesión
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            redirectAttributes.addFlashAttribute("error", "User not logged in!");
+            return "redirect:/app/dashboard";
+        }
 
-
-        User user= (User)session.getAttribute("user");
-
-
-        // TODO: GET / GENERATE ACCOUNT NUMBER:
-
+        // Genera el número de cuenta
         int setAccountNumber = GenAccountNumber.generateAccountNumber();
         String bankAccountNumber = Integer.toString(setAccountNumber);
 
-        // TODO: CREATE ACCOUNT:
-
+        // Crea la cuenta en la base de datos
         accountRepository.createBankAccount(user.getUser_id(), bankAccountNumber, accountName, accountType);
 
-
-        // TODO: SET SUCCESS MESSAGE:
-
+        // Agrega el mensaje de éxito
         redirectAttributes.addFlashAttribute("success", "Account Created Successfully!");
         return "redirect:/app/dashboard";
-
     }
-
-
-
-
 }
