@@ -1,19 +1,26 @@
 package com.demo_bank_v1.controllers;
 
-import com.demo_bank_v1.models.Payment;
+import com.demo_bank_v1.models.TransactionHistory;
 import com.demo_bank_v1.models.User;
 import com.demo_bank_v1.repository.AccountRepository;
 import com.demo_bank_v1.repository.PaymentRepository;
+import com.demo_bank_v1.repository.TransactHistoryRepository;
 import com.demo_bank_v1.repository.TransactRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 @RequestMapping("/transact")
@@ -30,13 +37,65 @@ public class TransactController {
     @Autowired
     private TransactRepository transactRepository;
 
+    @Autowired
+    private TransactHistoryRepository transactHistoryRepository;
+
     User user;
-
-
     double currentBalance;
-
     double newBalance;
 
+    // Handle Sorting (Asc and Desc)
+    @GetMapping("/transactions")
+    public String getTransactions(@RequestParam("order") String order, HttpSession session, Model model) {
+        user = (User) session.getAttribute("user");
+        List<TransactionHistory> transactions;
+
+        if ("asc".equals(order)) {
+            transactions = transactHistoryRepository.getTransactionRecordsByIdAsc(user.getUser_id());
+        } else {
+            transactions = transactHistoryRepository.getTransactionRecordsByIdDesc(user.getUser_id());
+        }
+
+        model.addAttribute("transact_history", transactions);
+        return "transactionsPage";
+    }
+
+    // Handle Filtering by Type or Date Range
+    @GetMapping("/filteredTransactions")
+    public String filterTransactions(@RequestParam(value = "type", required = false) String type,
+                                     @RequestParam(value = "start_date", required = false) String startDate,
+                                     @RequestParam(value = "end_date", required = false) String endDate,
+                                     HttpSession session,
+                                     Model model) {
+        user = (User) session.getAttribute("user");
+        List<TransactionHistory> transactions;
+
+        if (type != null && !type.isEmpty()) {
+            transactions = transactHistoryRepository.getTransactionsByType(user.getUser_id(), type);
+        } else if (startDate != null && endDate != null) {
+            transactions = transactHistoryRepository.getTransactionsByDateRange(user.getUser_id(), startDate, endDate);
+        } else {
+            transactions = transactHistoryRepository.getTransactionRecordsByIdDesc(user.getUser_id());
+        }
+
+        model.addAttribute("transact_history", transactions);
+        return "transactionsPage";
+    }
+
+    // Handle Pagination
+    @GetMapping("/paginatedTransactions")
+    public String getPaginatedTransactions(@RequestParam("page") int page,
+                                           @RequestParam("size") int size,
+                                           HttpSession session,
+                                           Model model) {
+        user = (User) session.getAttribute("user");
+        Pageable pageable = PageRequest.of(page, size);
+        Page<TransactionHistory> pagedResult = transactHistoryRepository.findByUserId(user.getUser_id(), pageable);
+
+        model.addAttribute("pagedTransactions", pagedResult.getContent());
+        model.addAttribute("totalPages", pagedResult.getTotalPages());
+        return "transactionsPage";
+    }
     @PostMapping("/deposit")
     public String deposit(@RequestParam("deposit_amount") String depositAmount,
                           @RequestParam("account_id") String accountId,

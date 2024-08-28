@@ -408,7 +408,7 @@
 
                         <!-- Button -->
                         <div class="form-group mb-2">
-                            <button class="pay-btn btn-pay">Add</button>
+                            <button type="submit" class="pay-btn btn-pay">Add</button>
                         </div>
                         <!-- End of Button -->
                     </form>
@@ -419,6 +419,7 @@
         </div>
     </div>
     <!-- End Of Right Side of Canvas -->
+
 
     <!-- Container -->
     <div class="container">
