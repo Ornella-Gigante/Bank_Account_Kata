@@ -118,7 +118,6 @@ Contributions are welcome! If you would like to contribute to this project, plea
 # License
 
 * This project is licensed under the MIT License - see the LICENSE file for details.
-* This project is also from a Tech Challengue made from Code Sherpas that I followed, visit them! --> https://www.code-sherpas.rocks/en-US
 
 
 # How does it look: 
